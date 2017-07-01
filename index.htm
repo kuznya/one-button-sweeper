@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>One-Button-Sweeper</title>
+<script src="js/jquery-2.1.4.min.js"></script>
+<script src="js/cc.js"></script>
+<script src="js/game.js"></script>
+<style>
+body { background:#ddd;}
+
+#field {
+    margin:50px auto 0 auto;
+    width:640px;
+    height:640px;
+    border:0px;
+    border-top: 1px solid black;
+    border-left:1px solid black;
+}
+
+#field div {
+    float:  left;
+    /*padding:0;*/
+    /*width:  31px;*/
+    /*height: 31px;*!*/
+    padding:6px 10px;
+    height: 19px;
+    width:  11px;
+    border:0px;
+    border-bottom: 1px solid #008;
+    border-right:  1px solid #008;
+}
+
+#field div              { font-weight:bold; }
+#field div::before      { content:'.'; }
+
+#field div.cnt0::before { content:''; }
+#field div.cnt0 { background: #eee; }
+
+#field div.cnt1 { background: #eee; color: #00f; }
+#field div.cnt2 { background: #eee; color: #0f0; }
+#field div.cnt3 { background: #eee; color: #f00; }
+#field div.cnt4 { background: #eee; color: #008; }
+#field div.cnt5 { background: #eee; color: #800; }
+#field div.cnt6 { background: #eee; color: #088; }
+#field div.cnt7 { background: #eee; color: #444; }
+#field div.cnt8 { background: #eee; color: #888; }
+
+#field div.cnt1::before { content:'1'; }
+#field div.cnt2::before { content:'2'; }
+#field div.cnt3::before { content:'3'; }
+#field div.cnt4::before { content:'4'; }
+#field div.cnt5::before { content:'5'; }
+#field div.cnt6::before { content:'6'; }
+#field div.cnt7::before { content:'7'; }
+#field div.cnt8::before { content:'8'; }
+#field div.flag         { background: #D8D; }
+#field div.flag::before { content:'F'; }
+#field div.mine::before { content:'&plus;'; }
+#field div.boom         { background: #F88; }
+#field div.boom::before { content:'*'; }
+
+div.c1 { 
+    background: #888; 
+}
+</style>
+</head>
+<body>
+<h4>One-Button-Sweeper</h4>
+<div id="container">
+    <div id="field"></div>
+</div>
+
+<script>
+//==============================================================================
+$(document).ready(function() {
+    //alert('go')
+    var game = new cGame()
+    //game.fillTpl()
+})
+//==============================================================================
+</script>
+</body>
+</html>
