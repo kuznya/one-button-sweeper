@@ -46,7 +46,7 @@ CModel.prototype._getMine = function(y, x)
 CModel.prototype._getFlag = function(y, x)
 {
     if (!this._checkCoord(y,x)) return 0;
-    return this.flags[y][x];
+    return this.flags[y][x] || (this.counts[y][x] === -10); // flag or boom
 }
 
 //----------------------------------------------------------
