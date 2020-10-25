@@ -22,12 +22,13 @@ body { background:#ddd;}
     /*padding:0;*/
     /*width:  31px;*/
     /*height: 31px;*!*/
-    padding:6px 10px;
+    padding:6px 0;
     height: 19px;
-    width:  11px;
+    width:  31px;
     border:0;
     border-bottom: 1px solid #008;
     border-right:  1px solid #008;
+    cursor: pointer;
 }
 
 #field div {
@@ -56,11 +57,16 @@ body { background:#ddd;}
 #field div.cnt6::before { content:'6'; }
 #field div.cnt7::before { content:'7'; }
 #field div.cnt8::before { content:'8'; }
-#field div.flag         { background: #ee8; }
-#field div.flag::before { content:'F'; }
+#field div.flag         {
+    background: #ee8;
+    padding: 3px 0 9px;
+    font-size: 18px;
+    color: red;
+}
+#field div.flag::before { content:'\2691';}
 #field div.mine::before { content:'&plus;'; }
 #field div.boom         { background: #F88; }
-#field div.boom::before { content:'*'; }
+#field div.boom::before { content:'\2297'; }
 
 div.c1 { 
     background: #888; 
