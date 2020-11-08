@@ -19,22 +19,17 @@ body { background:#ddd;}
 
 #field div {
     float:  left;
-    /*padding:0;*/
-    /*width:  31px;*/
-    /*height: 31px;*!*/
     padding:6px 0;
     height: 19px;
     width:  31px;
     border:0;
     border-bottom: 1px solid #008;
     border-right:  1px solid #008;
+    font-weight:bold;
+    text-align: center;
     cursor: pointer;
 }
 
-#field div {
-    font-weight:bold;
-    text-align: center;
-}
 #field div::before      { content:'.'; }
 
 #field div.cnt0::before { content:''; }
@@ -61,17 +56,12 @@ body { background:#ddd;}
     background: #ee8;
     padding: 3px 0 9px;
     font-size: 18px;
-    /*font-weight: normal;*/
     color: #800;
 }
 #field div.flag::before { content:'\2691';}
-#field div.mine::before { content:'&plus;'; }
 #field div.boom         { background: #F88; }
 #field div.boom::before { content:'\2297'; }
 
-div.c1 { 
-    background: #888; 
-}
 </style>
 </head>
 <body>
