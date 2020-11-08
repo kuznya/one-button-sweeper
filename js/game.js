@@ -3,7 +3,7 @@
 function CModel(cfg)
 {
     this.init(cfg)
-    this.placeMines()
+    // this.placeMines()
 }
 
 //----------------------------------------------------------
@@ -11,21 +11,22 @@ CModel.prototype.init = function(cfg)
 {
     this.cfg = cfg
 
-    var mines = []
-    for (var i=0; i<cfg.res_y; i++)
+    const mines = []
+    for (let i = 0; i<cfg.res_y; i++)
         mines.push( new Array(cfg.res_x).fill(0) )
     //dbg(mines)
     this.mines = mines;
 
-    var flags = []
-    for (var i=0; i<cfg.res_y; i++)
+    const flags = []
+    for (let i = 0; i<cfg.res_y; i++)
         flags.push( new Array(cfg.res_x).fill(0) )
     this.flags = flags;
 
-    var counts = []
-    for (var i=0; i<cfg.res_y; i++)
+    const counts = []
+    for (let i = 0; i<cfg.res_y; i++)
         counts.push( new Array(cfg.res_x).fill(-1) )
     this.counts = counts;
+    this.isMined = false;
 }
 
 //----------------------------------------------------------
@@ -50,8 +51,11 @@ CModel.prototype._getFlag = function(y, x)
 }
 
 //----------------------------------------------------------
-CModel.prototype.placeMines = function()
+CModel.prototype.placeMines = function(start_y, start_x)
 {
+    const isNearStart = (start_y, start_x, y, x) => {
+      return Math.abs(start_y - y) <= 1 && Math.abs(start_x - x) <= 1;
+    };
     var cfg = this.cfg
     var mines = this.mines
     var cnt = cfg.nof_mines
@@ -60,11 +64,12 @@ CModel.prototype.placeMines = function()
         var rnd = rand(cfg.res_y*cfg.res_x)
         var y = Math.floor(rnd/base)
         var x = rnd % base
-        if (!mines[y][x]) {
+        if (!mines[y][x] && !isNearStart(start_y, start_x, y, x)) {
             mines[y][x]=1;
             cnt--;
         }
     }
+    this.isMined = true;
 }
 
 //----------------------------------------------------------
@@ -88,7 +93,11 @@ CModel.prototype._getFogg = function(y, x)
 //----------------------------------------------------------
 CModel.prototype.openCell = function(y, x)
 {
-    var cl = this.getCellStatus(y,x)
+    if (!this.isMined) {
+      this.placeMines(y, x)
+    }
+
+    var cl = this.getCellStatus(y, x)
     if (cl!=='fogged') return -1;
 
     if (this.mines[y][x])
@@ -96,7 +105,7 @@ CModel.prototype.openCell = function(y, x)
         this.counts[y][x] = -10
         return -10;
     }
-    var cnt =
+    const cnt =
         this._getMine(y-1,x-1)+this._getMine(y-1,x)+this._getMine(y-1,x+1)+
         this._getMine(y  ,x-1)+                     this._getMine(y  ,x+1)+
         this._getMine(y+1,x-1)+this._getMine(y+1,x)+this._getMine(y+1,x+1);
@@ -107,7 +116,7 @@ CModel.prototype.openCell = function(y, x)
 //----------------------------------------------------------
 CModel.prototype.countFlags = function(y, x)
 {
-    var cnt =
+    const cnt =
         this._getFlag(y-1,x-1)+this._getFlag(y-1,x)+this._getFlag(y-1,x+1)+
         this._getFlag(y  ,x-1)+                     this._getFlag(y  ,x+1)+
         this._getFlag(y+1,x-1)+this._getFlag(y+1,x)+this._getFlag(y+1,x+1);
@@ -117,7 +126,7 @@ CModel.prototype.countFlags = function(y, x)
 //----------------------------------------------------------
 CModel.prototype.countFoggs = function(y, x)
 {
-    var cnt =
+    const cnt =
         this._getFogg(y-1,x-1)+this._getFogg(y-1,x)+this._getFogg(y-1,x+1)+
         this._getFogg(y  ,x-1)+                     this._getFogg(y  ,x+1)+
         this._getFogg(y+1,x-1)+this._getFogg(y+1,x)+this._getFogg(y+1,x+1);
@@ -312,4 +321,3 @@ CGame.prototype.flagCell = function(ctx)
     this.model.flagCell(y,x)
     this.redrawField()
 }
-
